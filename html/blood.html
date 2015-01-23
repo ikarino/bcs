@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ホイなしブラコン囮計算機</title>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+    input {
+      width: 100px;
+      text-align: right;
+    }
+    td.value {
+      text-align: right
+    }
+    </style>
+  </head>
+  <body>
+    <p>ホイなしブラコン囮計算機</p>
+    <table>
+      <tr><td>囮</td><td class="value">
+        <select id="decoy">
+          <option value="0">おばけキノコ</option>
+          <option value="1">キラーマシン</option>
+          <option value="2">きとうし</option>
+          <option value="3">いしにんぎょう</option>
+          <option value="4">ミステリードール</option>
+        </select>
+      </td></tr>
+      <tr><td>レベル</td><td class="value"><input type="number" min="1" max="99" id="lv"></td></tr>
+      <tr><td>ドーピング</td><td class="value"><input type="number" min="0" max="300" id="dp"></td></tr>
+      <tr><td>最大HP</td><td class="value"><input type="number" min="1" max="700" id="max_hp"></td></tr>
+      <tr><td>ブラハン数</td><td class="value"><input type="number" min="1" max="8" id="bra"></td></tr>
+      <tr><td>防御力</td><td class="value" id="df"></td></tr>
+      <tr><td>最大ダメージ</td><td class="value" id="max_dm"></td></tr>
+      <tr><td>最小ダメージ</td><td class="value" id="min_dm"></td></tr>
+      <tr><td>平均ダメージ</td><td class="value" id="ave_dm"></td></tr>
+      <tr><td>自然回復量</td><td class="value" id="hprecov"></td></tr>
+      <tr><td>平均HP増減</td><td class="value" id="fluctuation"></td></tr>
+    </table>
+    <p>※ 囮は倍速、ダメージはブラッドハンドからのみを想定。<br />UIはいつか見直す</p>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    var bb_data = [0, 0, 8, 6, 15, 11, 21, 15, 26, 18, 30, 21, 33, 23, 35, 25, 36, 27, 37, 29, 38, 31, 39, 33, 40, 35, 41, 37, 42, 39, 43, 41, 44, 43, 45, 45, 46, 47, 47, 48, 48, 49, 49, 50, 50, 51, 51, 52, 52, 53, 53, 54, 54, 55, 55, 56, 56, 57, 57, 58, 58, 59, 59, 60, 60, 61, 61, 62, 62, 63, 63, 64, 64, 65, 65, 66, 66, 67, 67, 68, 68, 69, 69, 70, 70, 71, 71, 72, 72, 73, 73, 74, 74, 75, 75, 76, 76, 77, 77, 78, 78, 79, 79, 80, 80, 81, 81, 82, 82, 83, 83, 84, 84, 85, 85, 86, 86, 87, 86, 88, 86, 90, 86, 92, 86, 94, 86, 96, 86, 98, 86, 100, 86, 102, 86, 104, 86, 106, 86, 108, 86, 110, 86, 112, 86, 114, 86, 116, 86, 118, 86, 120, 86, 122, 86, 124, 86, 126, 86, 127, 86, 129, 86, 130, 86, 132, 86, 133, 86, 135, 86, 136, 86, 138, 86, 139, 86, 141, 86, 142, 86, 144, 86, 145, 86, 147, 86, 148, 86, 150, 86, 151, 86, 153, 86, 154, 86, 158];
+    var monster = [[38, 12, 50], [60, 25, 100], [39, 10, 50], [100, 45, 50], [60, 17, 50]];
+    var lv = 40;
+    var dp = 0;
+    var selected = 0;
+    var max_hp = monster[selected][0] + bb_data[lv*2];
+    var df = monster[selected][1] + bb_data[lv*2+1];
+    var hprecov = max_hp / monster[selected][2];
+    var bra = 3;
+
+    function calc_damage(at, df) {
+      var base = at * 1.3 * Math.pow(35/36, df);
+      var max = Math.round(base*9/8);
+      var min = Math.round(base*9/8);
+      var ave = base.toFixed(2);
+
+
+      return [max, min, ave];
+    }
+
+    function calc_fluct(Hprecov, Dm, Bra) {
+      return (Hprecov - 0.75*0.92*Dm*Bra).toFixed(2);
+    }
+
+    function set_val() {
+      $("#lv").val(lv);
+      $("#dp").val(dp);
+      $("#max_hp").val(max_hp);
+      $("#df").text(df);
+      $("#bra").val(bra);
+
+      dm = calc_damage(17, df)
+      $("#hprecov").text(hprecov);
+      $("#max_dm").text(dm[0]);
+      $("#min_dm").text(dm[1]);
+      $("#ave_dm").text(dm[2]);
+      $("#fluctuation").text(calc_fluct(hprecov, dm[2], bra));
+      if (calc_fluct(hprecov, dm[2], bra) >= 0) {
+        $("#fluctuation").css("color", "black");
+      } else {
+        $("#fluctuation").css("color", "red");
+      }
+    }
+
+    function init() {
+      lv = 60;
+      dp = 100;
+      max_hp = monster[selected][0] + bb_data[lv*2] + dp;
+      df = monster[selected][1] + bb_data[lv*2+1];
+      hprecov = max_hp / monster[selected][2];
+      bra = 4;
+      set_val();
+    }
+
+    $(document).ready(function() {
+      init();
+      $("#lv,#dp").change(function() {
+        lv = Number($("#lv").val());
+        dp = Number($("#dp").val());
+        max_hp = monster[selected][0] + bb_data[lv*2] + dp;
+        df = monster[selected][1] + bb_data[lv*2+1];
+        hprecov = max_hp / monster[selected][2];
+        set_val();
+      });
+      $("#max_hp").change(function() {
+        max_hp = Number($("#max_hp").val());
+        dp = max_hp - monster[selected][0] - bb_data[lv*2];
+        df = monster[selected][1] + bb_data[lv*2+1];
+        hprecov = max_hp / monster[selected][2];
+        set_val();
+      });
+      $("#bra").change(function() {
+        bra = Number($("#bra").val());
+        set_val();
+      });
+      $("#decoy").change(function() {
+        selected = $("#decoy").val();
+        lv = Number($("#lv").val());
+        dp = 100;
+        max_hp = monster[selected][0] + bb_data[lv*2] + dp;
+        df = monster[selected][1] + bb_data[lv*2+1];
+        hprecov = max_hp / monster[selected][2];
+        set_val();
+      });
+    });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+#ifndef __MAP_H__
+#define __MAP_H__
+
+#include "Summon.hpp"
+#include "Daimajin.hpp"
+#include "Bloodhand.hpp"
+#include "GUIField.hpp"
+#include <vector>
+
+class GUIField;
+
+class Map {
+public:
+    Map();
+    ~Map();
+    void SetGUI();
+    void ChangeGUI(int field_index, int color_index);
+    void SetInfo(int place, int index) { info[place] = index; };
+    void AddDaimajin(int place);
+    void AddHoi(int place);
+    void Run();
+private:
+    // Input inp;
+    std::vector<Summon> summons;
+    std::vector<Daimajin> daimajins;
+    std::vector<Bloodhand> bloodhands;
+    int info[400];
+    /*
+      info == 0 : empty
+      info == 1 : wall
+      info == 2 : daimajin
+      info == 3 : bloodhand
+      info == 4 : summon
+     */
+    GUIField *gui;
+};
+
+#endif
