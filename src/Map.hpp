@@ -19,6 +19,7 @@ public:
     void AddDaimajin(int place);
     void AddHoi(int place);
     void Run();
+    void PrintInfo();
 private:
     // Input inp;
     std::vector<Summon> summons;

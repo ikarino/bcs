@@ -25,7 +25,8 @@ Summon::Summon(int place, int monsterINDEX, int lv, int dope, bool doublespeed,
 
 Summon::~Summon() {}
 
-void Summon::Action(int &info, std::vector<Daimajin> *sm) {
+void Summon::Action(int &info, std::vector<Daimajin> *dm) {
+    printf("************\n");
     // 隣接しているすべての敵の場所を取得。
     int list[] = {-21, -20, -19, -1, 1, 19, 20, 21};
     std::vector<int> targets;
@@ -37,22 +38,28 @@ void Summon::Action(int &info, std::vector<Daimajin> *sm) {
 
     // 隣接していない場合return
     if (targets.size() == 0) {
+        printf("No Daimajin found.\n");
         return;
     }
 
     // 攻撃対象を決定
-    int target_place = rand() % targets.size();
+    int target_place = targets[rand() % targets.size()];
+    printf("Going to Attack Daimajin at %d\n", target_place);
 
     // ここから先はモンスターの種類によって異なると思う。
     // とりあえず単純攻撃だけ実装しておく。
-    for (auto it = sm->begin(); it != sm->end(); ++it) {
+    for (auto it = dm->begin(); it != dm->end(); ++it) {
         if (it->GetPlace() == target_place) {
+            // printf("Before attack HP was: %d\n", it->GetIncidentHP());
             printf("Daimajin was Attacked!\n");
             it->GetDamage(_realATK);
+            // printf("After attack HP was: %d\n", it->GetIncidentHP());
             if (it->GetIncidentHP() <= 0) {
-                sm->erase(it);
+                dm->erase(it);
                 KilledSasaki();
+                (&info)[target_place] = 0;
             }
+            break;
         }
     }
 }
@@ -61,11 +68,12 @@ void Summon::Action(int &info, std::vector<Daimajin> *sm) {
 void Summon::KilledSasaki() {
     printf("Yeah ! I killed Sasaki !\n");
     _exp += 560;
-    if (_exp > GetEXP(_monsterINDEX, _lv)) {
+    if (_exp > GetEXP(_monsterINDEX, _lv+1)) {
         printf("LEVEL UP !!\n");
         _lv += 1;
         SetAbilityScore();
     }
+    // printf("Finished KillSasaki()\n");
 }
 
 void Summon::SetAbilityScore() {

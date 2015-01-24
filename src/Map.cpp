@@ -15,6 +15,7 @@ Map::Map() {
 
     // Test
     AddDaimajin(21);
+    AddDaimajin(215);
     AddHoi(218);
     AddHoi(305);
 }
@@ -38,6 +39,7 @@ void Map::Run() {
         it->Action(info[0], &daimajins);
         SetGUI();
     }
+    // PrintInfo();
 }
 
 
@@ -47,6 +49,7 @@ void Map::SetGUI() {
 
 void Map::AddDaimajin(int place) {
     Daimajin d(place);
+    printf("HP : %d\n", d.GetIncidentHP());
     daimajins.push_back(d);
     info[place] = 2;
     ChangeGUI(place, 2);
@@ -70,3 +73,13 @@ void Map::ChangeGUI(int field_index, int color_index) {
 }
 
 Map::~Map() {};
+
+
+void Map::PrintInfo() {
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 20; j++) {
+            printf("%d", info[i+j*20]);
+        }
+        printf("\n");
+    }
+}

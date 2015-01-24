@@ -6,12 +6,11 @@
 class Summon;
 class Daimajin : public Unit {
 public:
-    Daimajin(int place);
+    explicit Daimajin(int place);
+    Daimajin(int, int);
     void Action(int &info, std::vector<Summon> *sm);
-private:
-    int _hp;
 };
 
 int calc_len(int, int, int, int);
-int calc_minimum(int, int, int, int);
+int calc_minimum(int, int, int, int, int &);
 #endif

@@ -13,7 +13,18 @@ Daimajin::Daimajin(int place) {
 }
 
 
+Daimajin::Daimajin(int x, int y) {
+    _place = x*20+y;
+    _hp = 135;
+    _realATK = 44 * 1.3;
+    _realDEF = 51;
+    _double_speed = false;
+    _seal = false;
+}
+
+
 void Daimajin::Action(int &info, std::vector<Summon> *sm) {
+    printf("----------\n");
     int dx = GetPlace()/20;  // 大魔神のx座標
     int dy = GetPlace()%20;  // 大魔神のy座標
     int minimum_distance = 400;  // 大魔神と最も近いSummonとの距離
@@ -65,7 +76,7 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
         int target = rand() % target_x.size();
         printf("%ld Summons Found\n", target_x.size());
         printf("Movin toward the Summon at x = %d, y = %d\n", target_x[target], target_y[target]);
-         _place += calc_minimum(dx, dy, target_x[target], target_y[target]);
+        _place += calc_minimum(dx, dy, target_x[target], target_y[target], info);
         return;
     }
 }
@@ -74,38 +85,38 @@ int calc_len(int x, int y, int X, int Y) {
     return (x-X)*(x-X) + (y-Y)*(y-Y);
 }
 
-int calc_minimum(int x, int y, int X, int Y) {
+int calc_minimum(int x, int y, int X, int Y, int& info) {
     int ret = 0;
     int len = calc_len(x, y, X, Y);
-    if (len > calc_len(x-1, y-1, X, Y)) {
+    if (len > calc_len(x-1, y-1, X, Y) && (&info)[(x-1)*20 + (y-1)] == 0) {
         ret = -21;
         len = calc_len(x-1, y-1, X, Y);
     }
-    if (len > calc_len(x-1, y, X, Y)) {
+    if (len > calc_len(x-1, y, X, Y) && (&info)[(x-1)*20 + y] == 0) {
         ret = -20;
         len = calc_len(x-1, y, X, Y);
     }
-    if (len > calc_len(x-1, y+1, X, Y)) {
+    if (len > calc_len(x-1, y+1, X, Y) && (&info)[(x-1)*20 + (y+1)] == 0) {
         ret = -19;
         len = calc_len(x-1, y+1, X, Y);
     }
-    if (len > calc_len(x, y-1, X, Y)) {
+    if (len > calc_len(x, y-1, X, Y) && (&info)[x*20 + (y-1)] == 0) {
         ret = -1;
         len = calc_len(x, y-1, X, Y);
     }
-    if (len > calc_len(x, y+1, X, Y)) {
+    if (len > calc_len(x, y+1, X, Y) && (&info)[x*20 + (y+1)] == 0) {
         ret = +1;
         len = calc_len(x, y+1, X, Y);
     }
-    if (len > calc_len(x+1, y-1, X, Y)) {
+    if (len > calc_len(x+1, y-1, X, Y) && (&info)[(x+1)*20 + (y-1)] == 0) {
         ret = +19;
         len = calc_len(x+1, y-1, X, Y);
     }
-    if (len > calc_len(x+1, y, X, Y)) {
+    if (len > calc_len(x+1, y, X, Y) && (&info)[(x+1)*20 + y] == 0) {
         ret = 20;
         len = calc_len(x+1, y, X, Y);
     }
-    if (len > calc_len(x+1, y+1, X, Y)) {
+    if (len > calc_len(x+1, y+1, X, Y) && (&info)[(x+1)*20 + (y+1)] == 0) {
         ret = 21;
         len = calc_len(x+1, y+1, X, Y);
     }
