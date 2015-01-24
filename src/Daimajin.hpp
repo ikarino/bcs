@@ -1,11 +1,13 @@
 #ifndef __DAIMAJIN_H__
 #define __DAIMAJIN_H__
 #include "Unit.hpp"
+#include <vector>
 
+class Summon;
 class Daimajin : public Unit {
 public:
     Daimajin(int place);
-    void Action(int &info);
+    void Action(int &info, std::vector<Summon> *sm);
 private:
     int _hp;
 };

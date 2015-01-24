@@ -1,4 +1,4 @@
-# Install script for directory: /Users/ikarino/Dropbox/work/blood/src
+# Install script for directory: /Users/ikarino/Dropbox/work/bcs/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -33,7 +33,7 @@ else()
   set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 endif()
 
-file(WRITE "/Users/ikarino/Dropbox/work/blood/build/${CMAKE_INSTALL_MANIFEST}" "")
+file(WRITE "/Users/ikarino/Dropbox/work/bcs/build/${CMAKE_INSTALL_MANIFEST}" "")
 foreach(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  file(APPEND "/Users/ikarino/Dropbox/work/blood/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  file(APPEND "/Users/ikarino/Dropbox/work/bcs/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 endforeach()

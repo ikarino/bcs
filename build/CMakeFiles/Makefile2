@@ -47,10 +47,10 @@ RM = /usr/local/Cellar/cmake/3.1.0/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ikarino/Dropbox/work/blood/src
+CMAKE_SOURCE_DIR = /Users/ikarino/Dropbox/work/bcs/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ikarino/Dropbox/work/blood/build
+CMAKE_BINARY_DIR = /Users/ikarino/Dropbox/work/bcs/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/blood.dir
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /Users/ikarino/Dropbox/work/blood/build
 CMakeFiles/blood.dir/all:
 	$(MAKE) -f CMakeFiles/blood.dir/build.make CMakeFiles/blood.dir/depend
 	$(MAKE) -f CMakeFiles/blood.dir/build.make CMakeFiles/blood.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /Users/ikarino/Dropbox/work/blood/build/CMakeFiles  1 2 3 4 5 6 7
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/ikarino/Dropbox/work/bcs/build/CMakeFiles  1 2 3 4 5 6 7 8
 	@echo "Built target blood"
 .PHONY : CMakeFiles/blood.dir/all
 
@@ -69,9 +69,9 @@ all: CMakeFiles/blood.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/blood.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/blood/build/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/bcs/build/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/blood.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/blood/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/bcs/build/CMakeFiles 0
 .PHONY : CMakeFiles/blood.dir/rule
 
 # Convenience name for target.

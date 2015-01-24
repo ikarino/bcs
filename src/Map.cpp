@@ -23,12 +23,19 @@ Map::Map() {
 void Map::Run() {
     // printf("Number of Daimajins are %ld\n", daimajins.size());
     // for (std::vector<Daimajin>::iterator it = daimajins.begin(); it != daimajins.end(); ++it){
+
+    // だいまじんの行動
     for (auto it = daimajins.begin(); it != daimajins.end(); ++it){
         int place_before = it->GetPlace();
-        it->Action(info[0]);
+        it->Action(info[0], &summons);
         int place_after = it->GetPlace();
         info[place_before] = 0;
         info[place_after] = 2;
+        SetGUI();
+    }
+    // 仲間の行動
+    for (auto it = summons.begin(); it != summons.end(); ++it){
+        it->Action(info[0], &daimajins);
         SetGUI();
     }
 }
@@ -46,10 +53,15 @@ void Map::AddDaimajin(int place) {
 }
 
 void Map::AddHoi(int place) {
-    Summon s(place, 120, 30, 30, false, false, 0, 0);
+    Summon s(place, 120, 30, 0, false, 0, 0, false, false);
     summons.push_back(s);
-    info[place] = 4;
-    ChangeGUI(place, 4);
+    if (s.isInvsible()) {
+        info[place] = 5;
+        ChangeGUI(place, 5);
+    } else {
+        info[place] = 4;
+        ChangeGUI(place, 4);
+    }
 }
 
 

@@ -6,31 +6,37 @@
 
 #IncludeRegexTransform: 
 
-/Users/ikarino/Dropbox/work/blood/src/Bloodhand.cpp
+/Users/ikarino/Dropbox/work/bcs/src/Bloodhand.cpp
 Bloodhand.hpp
-/Users/ikarino/Dropbox/work/blood/src/Bloodhand.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Bloodhand.hpp
 
-/Users/ikarino/Dropbox/work/blood/src/Bloodhand.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Bloodhand.hpp
 Unit.hpp
-/Users/ikarino/Dropbox/work/blood/src/Unit.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Unit.hpp
 
-/Users/ikarino/Dropbox/work/blood/src/Daimajin.cpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.cpp
 Daimajin.hpp
-/Users/ikarino/Dropbox/work/blood/src/Daimajin.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
+Summon.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Summon.hpp
 cstdio
 -
+cstdlib
+-
 
-/Users/ikarino/Dropbox/work/blood/src/Daimajin.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
 Unit.hpp
-/Users/ikarino/Dropbox/work/blood/src/Unit.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Unit.hpp
+vector
+-
 
-/Users/ikarino/Dropbox/work/blood/src/GUIField.cpp
+/Users/ikarino/Dropbox/work/bcs/src/GUIField.cpp
 GUIField.hpp
-/Users/ikarino/Dropbox/work/blood/src/GUIField.hpp
+/Users/ikarino/Dropbox/work/bcs/src/GUIField.hpp
 unistd.h
 -
 
-/Users/ikarino/Dropbox/work/blood/src/GUIField.hpp
+/Users/ikarino/Dropbox/work/bcs/src/GUIField.hpp
 FL/FL.H
 -
 FL/Fl_Window.H
@@ -38,51 +44,67 @@ FL/Fl_Window.H
 FL/Fl_Button.H
 -
 
-/Users/ikarino/Dropbox/work/blood/src/Map.cpp
+/Users/ikarino/Dropbox/work/bcs/src/Map.cpp
 Map.hpp
-/Users/ikarino/Dropbox/work/blood/src/Map.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Map.hpp
 GUIField.hpp
-/Users/ikarino/Dropbox/work/blood/src/GUIField.hpp
+/Users/ikarino/Dropbox/work/bcs/src/GUIField.hpp
 Daimajin.hpp
-/Users/ikarino/Dropbox/work/blood/src/Daimajin.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
 
-/Users/ikarino/Dropbox/work/blood/src/Map.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Map.hpp
 Summon.hpp
-/Users/ikarino/Dropbox/work/blood/src/Summon.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Summon.hpp
 Daimajin.hpp
-/Users/ikarino/Dropbox/work/blood/src/Daimajin.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
 Bloodhand.hpp
-/Users/ikarino/Dropbox/work/blood/src/Bloodhand.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Bloodhand.hpp
 GUIField.hpp
-/Users/ikarino/Dropbox/work/blood/src/GUIField.hpp
+/Users/ikarino/Dropbox/work/bcs/src/GUIField.hpp
 vector
 -
 
-/Users/ikarino/Dropbox/work/blood/src/Summon.cpp
+/Users/ikarino/Dropbox/work/bcs/src/Summon.cpp
 Summon.hpp
-/Users/ikarino/Dropbox/work/blood/src/Summon.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Summon.hpp
+Daimajin.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
+status.hpp
+/Users/ikarino/Dropbox/work/bcs/src/status.hpp
 cstdio
 -
 cstdlib
 -
 
-/Users/ikarino/Dropbox/work/blood/src/Summon.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Summon.hpp
 Unit.hpp
-/Users/ikarino/Dropbox/work/blood/src/Unit.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Unit.hpp
+vector
+-
 
-/Users/ikarino/Dropbox/work/blood/src/Unit.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Unit.cpp
+Unit.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Unit.hpp
+cstdlib
+-
+cstdio
+-
+cmath
+-
 
-/Users/ikarino/Dropbox/work/blood/src/main.cpp
+/Users/ikarino/Dropbox/work/bcs/src/Unit.hpp
+
+/Users/ikarino/Dropbox/work/bcs/src/main.cpp
 status.hpp
-/Users/ikarino/Dropbox/work/blood/src/status.hpp
+/Users/ikarino/Dropbox/work/bcs/src/status.hpp
 Summon.hpp
-/Users/ikarino/Dropbox/work/blood/src/Summon.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Summon.hpp
 Bloodhand.hpp
-/Users/ikarino/Dropbox/work/blood/src/Bloodhand.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Bloodhand.hpp
 Daimajin.hpp
-/Users/ikarino/Dropbox/work/blood/src/Daimajin.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
 Map.hpp
-/Users/ikarino/Dropbox/work/blood/src/Map.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Map.hpp
 cstdlib
 -
 ctime
@@ -92,15 +114,15 @@ unistd.h
 vector
 -
 
-/Users/ikarino/Dropbox/work/blood/src/status.cpp
+/Users/ikarino/Dropbox/work/bcs/src/status.cpp
 status.hpp
-/Users/ikarino/Dropbox/work/blood/src/status.hpp
+/Users/ikarino/Dropbox/work/bcs/src/status.hpp
 cstdlib
 -
 iostream
 -
 
-/Users/ikarino/Dropbox/work/blood/src/status.hpp
+/Users/ikarino/Dropbox/work/bcs/src/status.hpp
 random
 -
 ctime

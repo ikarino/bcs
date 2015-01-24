@@ -43,10 +43,10 @@ RM = /usr/local/Cellar/cmake/3.1.0/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/ikarino/Dropbox/work/blood/src
+CMAKE_SOURCE_DIR = /Users/ikarino/Dropbox/work/bcs/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/ikarino/Dropbox/work/blood/build
+CMAKE_BINARY_DIR = /Users/ikarino/Dropbox/work/bcs/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -73,9 +73,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/blood/build/CMakeFiles /Users/ikarino/Dropbox/work/blood/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/bcs/build/CMakeFiles /Users/ikarino/Dropbox/work/bcs/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/blood/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ikarino/Dropbox/work/bcs/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -235,6 +235,30 @@ Summon.cpp.s:
 	$(MAKE) -f CMakeFiles/blood.dir/build.make CMakeFiles/blood.dir/Summon.cpp.s
 .PHONY : Summon.cpp.s
 
+Unit.o: Unit.cpp.o
+.PHONY : Unit.o
+
+# target to build an object file
+Unit.cpp.o:
+	$(MAKE) -f CMakeFiles/blood.dir/build.make CMakeFiles/blood.dir/Unit.cpp.o
+.PHONY : Unit.cpp.o
+
+Unit.i: Unit.cpp.i
+.PHONY : Unit.i
+
+# target to preprocess a source file
+Unit.cpp.i:
+	$(MAKE) -f CMakeFiles/blood.dir/build.make CMakeFiles/blood.dir/Unit.cpp.i
+.PHONY : Unit.cpp.i
+
+Unit.s: Unit.cpp.s
+.PHONY : Unit.s
+
+# target to generate assembly for a file
+Unit.cpp.s:
+	$(MAKE) -f CMakeFiles/blood.dir/build.make CMakeFiles/blood.dir/Unit.cpp.s
+.PHONY : Unit.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -307,6 +331,9 @@ help:
 	@echo "... Summon.o"
 	@echo "... Summon.i"
 	@echo "... Summon.s"
+	@echo "... Unit.o"
+	@echo "... Unit.i"
+	@echo "... Unit.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

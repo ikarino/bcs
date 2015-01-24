@@ -30,6 +30,9 @@ void GUIField::changeColor(int field_index, int color_index) {
     case 4:
         pa[field_index]->color(FL_BLUE);
         break;
+    case 5:
+        pa[field_index]->color(FL_GRAY);
+        break;
     default:
         printf("error!\nAt GUIField::changeColor\n");
         exit(1);
@@ -55,6 +58,9 @@ void GUIField::setColor(int* index) {
             break;
         case 4:
             pa[i]->color(FL_BLUE);
+            break;
+        case 5:
+            pa[i]->color(FL_GRAY);
             break;
         default:
             printf("error!\nAt GUIField::changeColor\n");

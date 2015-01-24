@@ -30,7 +30,8 @@ private:
       info == 1 : wall
       info == 2 : daimajin
       info == 3 : bloodhand
-      info == 4 : summon
+      info == 4 : summon visible
+      info == 5 : summon invisible
      */
     GUIField *gui;
 };
