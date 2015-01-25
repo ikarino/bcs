@@ -76,7 +76,9 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
         int target = rand() % target_x.size();
         printf("%ld Summons Found\n", target_x.size());
         printf("Movin toward the Summon at x = %d, y = %d\n", target_x[target], target_y[target]);
+        (&info)[_place] = 0;
         _place += calc_minimum(dx, dy, target_x[target], target_y[target], info);
+        (&info)[_place] = 2;
         return;
     }
 }

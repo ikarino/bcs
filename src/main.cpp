@@ -6,11 +6,8 @@
 #include "Daimajin.hpp"
 #include "Map.hpp"
 
-#include <cstdlib>
 #include <ctime>
-#include <unistd.h>
 
-#include <vector>
 
 
 int main() {
@@ -18,7 +15,6 @@ int main() {
     Map *map = new Map();
     map->SetGUI();
     for (int i = 0; i < 30; i++) {
-        usleep(50000);
         map->Run();
     }
     // gui->random();

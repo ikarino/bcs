@@ -3,6 +3,7 @@
 
 CMakeFiles/blood.dir/Bloodhand.cpp.o: /Users/ikarino/Dropbox/work/bcs/src/Bloodhand.cpp
 CMakeFiles/blood.dir/Bloodhand.cpp.o: /Users/ikarino/Dropbox/work/bcs/src/Bloodhand.hpp
+CMakeFiles/blood.dir/Bloodhand.cpp.o: /Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
 CMakeFiles/blood.dir/Bloodhand.cpp.o: /Users/ikarino/Dropbox/work/bcs/src/Unit.hpp
 
 CMakeFiles/blood.dir/Daimajin.cpp.o: /Users/ikarino/Dropbox/work/bcs/src/Daimajin.cpp

@@ -1,6 +1,7 @@
 #include "Map.hpp"
 #include "GUIField.hpp"
 #include "Daimajin.hpp"
+#include <unistd.h>
 
 Map::Map() {
     for(int i = 0; i < 400; i++) {
@@ -14,10 +15,19 @@ Map::Map() {
     SetGUI();
 
     // Test
+    info[42] = 1;
+    info[62] = 1;
+    info[82] = 1;
+    info[284] = 1;
+    info[285] = 1;
+    info[286] = 1;
     AddDaimajin(21);
     AddDaimajin(215);
+    AddDaimajin(41);
+    AddBloodhand(210);
     AddHoi(218);
     AddHoi(305);
+    SetGUI();
 }
 
 
@@ -25,13 +35,14 @@ void Map::Run() {
     // printf("Number of Daimajins are %ld\n", daimajins.size());
     // for (std::vector<Daimajin>::iterator it = daimajins.begin(); it != daimajins.end(); ++it){
 
+    // ブラッドハンドの行動
+    for (auto it = bloodhands.begin(); it != bloodhands.end(); ++it){
+        it->Action(info[0], &summons, &daimajins);
+        SetGUI();
+    }
     // だいまじんの行動
     for (auto it = daimajins.begin(); it != daimajins.end(); ++it){
-        int place_before = it->GetPlace();
         it->Action(info[0], &summons);
-        int place_after = it->GetPlace();
-        info[place_before] = 0;
-        info[place_after] = 2;
         SetGUI();
     }
     // 仲間の行動
@@ -45,25 +56,28 @@ void Map::Run() {
 
 void Map::SetGUI() {
     gui->setColor(info);
+    usleep(100000);
 }
 
 void Map::AddDaimajin(int place) {
     Daimajin d(place);
-    printf("HP : %d\n", d.GetIncidentHP());
     daimajins.push_back(d);
     info[place] = 2;
-    ChangeGUI(place, 2);
+}
+
+void Map::AddBloodhand(int place) {
+    Bloodhand b(place, true);
+    bloodhands.push_back(b);
+    info[place] = 3;
 }
 
 void Map::AddHoi(int place) {
-    Summon s(place, 120, 30, 0, false, 0, 0, false, false);
+    Summon s(place, 120, 99, 1000, false, 0, 0, false, false);
     summons.push_back(s);
     if (s.isInvsible()) {
         info[place] = 5;
-        ChangeGUI(place, 5);
     } else {
         info[place] = 4;
-        ChangeGUI(place, 4);
     }
 }
 

@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 Summon::Summon(int place, int monsterINDEX, int lv, int dope, bool doublespeed,
-       int wATK, int wDEF, bool seal, bool invisible) {
+               int wATK, int wDEF, bool seal, bool invisible) {
     _place = place;
     _monsterINDEX = monsterINDEX;
     _lv = lv;
@@ -14,12 +14,12 @@ Summon::Summon(int place, int monsterINDEX, int lv, int dope, bool doublespeed,
     _wDEF = wDEF;
     _invisible = invisible;
 
-    _hp = _maximumHP;
     _double_speed = doublespeed;
     _seal = seal;
     _exp = GetEXP(monsterINDEX, lv);
 
     SetAbilityScore();
+    _hp = _maximumHP;
 }
 
 
@@ -67,6 +67,8 @@ void Summon::Action(int &info, std::vector<Daimajin> *dm) {
 
 void Summon::KilledSasaki() {
     printf("Yeah ! I killed Sasaki !\n");
+    if ( _lv == 99) { return; }
+
     _exp += 560;
     if (_exp > GetEXP(_monsterINDEX, _lv+1)) {
         printf("LEVEL UP !!\n");

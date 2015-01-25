@@ -9,10 +9,16 @@
 /Users/ikarino/Dropbox/work/bcs/src/Bloodhand.cpp
 Bloodhand.hpp
 /Users/ikarino/Dropbox/work/bcs/src/Bloodhand.hpp
+Daimajin.hpp
+/Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
+cstdlib
+-
 
 /Users/ikarino/Dropbox/work/bcs/src/Bloodhand.hpp
 Unit.hpp
 /Users/ikarino/Dropbox/work/bcs/src/Unit.hpp
+vector
+-
 
 /Users/ikarino/Dropbox/work/bcs/src/Daimajin.cpp
 Daimajin.hpp
@@ -51,6 +57,8 @@ GUIField.hpp
 /Users/ikarino/Dropbox/work/bcs/src/GUIField.hpp
 Daimajin.hpp
 /Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
+unistd.h
+-
 
 /Users/ikarino/Dropbox/work/bcs/src/Map.hpp
 Summon.hpp
@@ -105,13 +113,7 @@ Daimajin.hpp
 /Users/ikarino/Dropbox/work/bcs/src/Daimajin.hpp
 Map.hpp
 /Users/ikarino/Dropbox/work/bcs/src/Map.hpp
-cstdlib
--
 ctime
--
-unistd.h
--
-vector
 -
 
 /Users/ikarino/Dropbox/work/bcs/src/status.cpp
