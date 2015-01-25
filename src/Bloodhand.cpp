@@ -12,7 +12,10 @@ Bloodhand::Bloodhand(int place, bool double_speed) {
     _realDEF = 21;
     _double_speed = double_speed;
     _seal = false;
-    _vain_count = 0;
+
+    _arragin_count = 0;
+    _upper_limit_vain_count = 0;
+    _no_place_vain_count = 0;
 }
 
 
@@ -23,9 +26,10 @@ void Bloodhand::Action(int &info,
     if (rand()%4 == 0) {
         // だいまじん召喚
         printf("Arragin !\n");
+        _arragin_count++;
         if (dm->size() == Bloodhand::__upper_limit) {
             printf("Reached upper limit of daimajins\n");
-            _vain_count++;
+            _upper_limit_vain_count++;
             return;
         }
         int list[] = {-21, -20, -19, -1, 1, 19, 20, 21};
@@ -34,6 +38,12 @@ void Bloodhand::Action(int &info,
             if ((&info)[GetPlace()+list[i]] == 0) {
                 blank_positions.push_back(GetPlace()+list[i]);
             }
+        }
+        // 召喚スペースが無い場合
+        if (blank_positions.size() == 0) {
+            printf("No place to Arragin ! Shit !\n");
+            _no_place_vain_count++;
+            return;
         }
         int daimajin_pos = blank_positions[rand()%blank_positions.size()];
         Daimajin d(daimajin_pos);

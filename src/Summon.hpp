@@ -13,9 +13,17 @@ public:
     bool isInvsible() { return _invisible; }
     int GetMHP() { return _maximumHP; }
     int GetIncidentEXP() { return _exp; }
-    void Action(int &info, std::vector<Daimajin> *en);
+    unsigned int GetKillCount() { return _kill_count; }
+    int GetMonsterINDEX() { return _monsterINDEX; }
+
+    void ShowStatus();
+    void Action(int &info, std::vector<Daimajin> *en, std::vector<Summon> *sm);
     void KilledSasaki();
     void SetAbilityScore();
+    void StandardAttack(int target_place, int &info, std::vector<Daimajin> *dm);
+    void KillerMachine(int target_place, int &info, std::vector<Daimajin> *dm);
+    void Hoimin(int &info, std::vector<Daimajin> *dmm, std::vector<Summon> *sm);
+    void Get25();
 private:
     int _monsterINDEX;
     int _lv;
@@ -26,7 +34,10 @@ private:
     int _originalATK;
     int _originalDEF;
     int _exp;
+    int _rec;
     bool _invisible;
+
+    unsigned int _kill_count;
 };
 
 #endif

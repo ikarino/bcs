@@ -13,7 +13,9 @@ public:
     static void SetUpperLimit(int u) { __upper_limit = u; }
 private:
     static unsigned long __upper_limit;
-    int _vain_count;
+    int _upper_limit_vain_count;
+    int _no_place_vain_count;
+    int _arragin_count;
 };
 
 #endif

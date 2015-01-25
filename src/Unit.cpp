@@ -5,6 +5,7 @@
 
 void Unit::GetDamage(double at) {
     if (at == 0) {
+        printf("AT is 0. Just seeing how it goes.\n");
         return;
     }
     if (rand()%100 < 92) {

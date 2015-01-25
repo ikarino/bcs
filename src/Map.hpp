@@ -1,6 +1,9 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
+// Toggle line below for GUI
+// #define GUI
+
 #include "Summon.hpp"
 #include "Daimajin.hpp"
 #include "Bloodhand.hpp"
@@ -16,11 +19,16 @@ public:
     void SetGUI();
     void ChangeGUI(int field_index, int color_index);
     void SetInfo(int place, int index) { info[place] = index; };
+    void Run();
+    // TEST from here
     void AddDaimajin(int place);
     void AddBloodhand(int place);
     void AddHoi(int place);
-    void Run();
+    void AddDecoyKinoko(int place);
     void PrintInfo();
+    void AddTestCondition();
+    void ShowFinishStatus();
+    // TEST to here
 private:
     // Input inp;
     std::vector<Summon> summons;

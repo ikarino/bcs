@@ -8,15 +8,17 @@
 
 #include <ctime>
 
-
-
 int main() {
     srand((unsigned)time(NULL));
     Map *map = new Map();
-    map->SetGUI();
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 100; i++) {
         map->Run();
     }
+    map->ShowFinishStatus();
     // gui->random();
+#ifdef GUI
     return Fl::run();
+#else
+    return 0;
+#endif
 }

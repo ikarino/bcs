@@ -1,7 +1,9 @@
 #include "Map.hpp"
+#include "status.hpp"
 #include <unistd.h>
 
 Map::Map() {
+    // printf("Initializing data\n");
     //
     // ここの初期化はほとんどインプットファイルによるものに書き換える。
     //
@@ -12,29 +14,42 @@ Map::Map() {
             info[i] = 0;
         }
     }
+#ifdef GUI
     gui = new GUIField();
     SetGUI();
+#endif
 
     // Setting the daimajin upper limit
     upper_limit = 20;
     Bloodhand::SetUpperLimit(upper_limit);
 
     // Test
-    info[42] = 1;
-    info[62] = 1;
-    info[82] = 1;
-    info[284] = 1;
-    info[285] = 1;
-    info[286] = 1;
-    AddDaimajin(21);
-    AddDaimajin(215);
-    AddDaimajin(41);
-    AddBloodhand(210);
-    AddHoi(218);
-    AddHoi(305);
+    AddTestCondition();
+#ifdef GUI
     SetGUI();
+#endif
+    // printf("Finished initialization\n");
 }
 
+
+void Map::ShowFinishStatus() {
+    printf("============RESULT============\n");
+    for (auto it = summons.begin(); it != summons.end(); ++it) {
+        printf("-----------------------------\n");
+        printf("MONSTER: %s\n", GetName(it->GetMonsterINDEX()).c_str());
+        printf("Pos X: %d, Y: %d\n", it->GetPlace()/20, it->GetPlace()%20);
+        printf("EXP    : %d\n", it->GetKillCount()*560);
+    }
+    printf("==============================\n");
+}
+
+
+void Map::AddTestCondition() {
+    AddDecoyKinoko(211);
+    AddBloodhand(210);
+    AddHoi(212);
+    AddHoi(192);
+}
 
 void Map::Run() {
     // printf("Number of Daimajins are %ld\n", daimajins.size());
@@ -43,17 +58,23 @@ void Map::Run() {
     // ブラッドハンドの行動
     for (auto it = bloodhands.begin(); it != bloodhands.end(); ++it){
         it->Action(info[0], &summons, &daimajins);
+#ifdef GUI
         SetGUI();
+#endif
     }
     // だいまじんの行動
     for (auto it = daimajins.begin(); it != daimajins.end(); ++it){
         it->Action(info[0], &summons);
+#ifdef GUI
         SetGUI();
+#endif
     }
     // 仲間の行動
     for (auto it = summons.begin(); it != summons.end(); ++it){
-        it->Action(info[0], &daimajins);
+        it->Action(info[0], &daimajins, &summons);
+#ifdef GUI
         SetGUI();
+#endif
     }
     // PrintInfo();
 }
@@ -78,6 +99,16 @@ void Map::AddBloodhand(int place) {
 
 void Map::AddHoi(int place) {
     Summon s(place, 120, 99, 1000, false, 0, 0, false, false);
+    summons.push_back(s);
+    if (s.isInvsible()) {
+        info[place] = 5;
+    } else {
+        info[place] = 4;
+    }
+}
+
+void Map::AddDecoyKinoko(int place) {
+    Summon s(place, 606, 60, 1000, false, 9, 0, false, false);
     summons.push_back(s);
     if (s.isInvsible()) {
         info[place] = 5;

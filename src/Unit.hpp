@@ -4,12 +4,13 @@
 class Unit {
 public:
     int GetPlace() { return _place; }
+    bool isSealed() { return _seal; };
+    int GetIncidentHP() { return _hp; }
     void Seal() { _seal = true; }
     void GetDamage(double at);
-    int GetIncidentHP() { return _hp; }
 protected:
     int _place;
-    int _hp;
+    double _hp;
     double _realATK;
     double _realDEF;
     bool _double_speed;

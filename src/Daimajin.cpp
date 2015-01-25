@@ -4,6 +4,8 @@
 #include <cstdlib>
 
 Daimajin::Daimajin(int place) {
+    // daimajin 105 34 30
+    // LV.6      30 10 21
     _place = place;
     _hp = 135;
     _realATK = 44 * 1.3;
@@ -20,6 +22,14 @@ Daimajin::Daimajin(int x, int y) {
     _realDEF = 51;
     _double_speed = false;
     _seal = false;
+}
+
+
+void Daimajin::Get25() {
+    _hp += 25;
+    if (_hp > 135) {
+        _hp = 135;
+    }
 }
 
 
@@ -75,7 +85,7 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
         // Summon が遠くにいる。
         int target = rand() % target_x.size();
         printf("%ld Summons Found\n", target_x.size());
-        printf("Movin toward the Summon at x = %d, y = %d\n", target_x[target], target_y[target]);
+        printf("Moving toward the Summon at x = %d, y = %d\n", target_x[target], target_y[target]);
         (&info)[_place] = 0;
         _place += calc_minimum(dx, dy, target_x[target], target_y[target], info);
         (&info)[_place] = 2;
