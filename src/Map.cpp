@@ -34,21 +34,31 @@ Map::Map() {
 
 void Map::ShowFinishStatus() {
     printf("============RESULT============\n");
+    int sum = 0;
     for (auto it = summons.begin(); it != summons.end(); ++it) {
+        sum += it->GetKillCount()*560;
         printf("-----------------------------\n");
         printf("MONSTER: %s\n", GetName(it->GetMonsterINDEX()).c_str());
         printf("Pos X: %d, Y: %d\n", it->GetPlace()/20, it->GetPlace()%20);
         printf("EXP    : %d\n", it->GetKillCount()*560);
     }
     printf("==============================\n");
+    printf("Total EXP: %d\n", sum);
+    printf("==============================\n");
 }
 
 
 void Map::AddTestCondition() {
+    info[189] = 1;
+    info[209] = 1;
+    info[229] = 1;
+    info[190] = 1;
+    info[230] = 1;
     AddDecoyKinoko(211);
     AddBloodhand(210);
-    AddHoi(212);
-    AddHoi(192);
+    AddKillerMachine(192);
+    AddKillerMachine(212);
+    AddKillerMachine(232);
 }
 
 void Map::Run() {
@@ -82,7 +92,8 @@ void Map::Run() {
 
 void Map::SetGUI() {
     gui->setColor(info);
-    usleep(100000);
+    // usleep(100000);
+    usleep(10000);
 }
 
 void Map::AddDaimajin(int place) {
@@ -99,6 +110,16 @@ void Map::AddBloodhand(int place) {
 
 void Map::AddHoi(int place) {
     Summon s(place, 120, 99, 1000, false, 0, 0, false, false);
+    summons.push_back(s);
+    if (s.isInvsible()) {
+        info[place] = 5;
+    } else {
+        info[place] = 4;
+    }
+}
+
+void Map::AddKillerMachine(int place) {
+    Summon s(place, 613, 50, 100, false, 0, 0, false, false);
     summons.push_back(s);
     if (s.isInvsible()) {
         info[place] = 5;

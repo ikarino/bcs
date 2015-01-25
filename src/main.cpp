@@ -11,7 +11,7 @@
 int main() {
     srand((unsigned)time(NULL));
     Map *map = new Map();
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1500; i++) {
         map->Run();
     }
     map->ShowFinishStatus();

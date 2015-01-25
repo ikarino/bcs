@@ -90,6 +90,7 @@ void Summon::Action(int &info,
         //
         switch(GetMonsterINDEX()) {
         case 613:
+            KillerMachine(target_place, info, dm);
             break;
         default:
             StandardAttack(target_place, info, dm);
@@ -133,6 +134,7 @@ void Summon::KillerMachine(int target_place,
                     KilledSasaki();
                     (&info)[target_place] = 0;
                     _kill_count++;
+                    break;
                 }
             }
             break;

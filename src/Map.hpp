@@ -2,7 +2,7 @@
 #define __MAP_H__
 
 // Toggle line below for GUI
-// #define GUI
+#define GUI
 
 #include "Summon.hpp"
 #include "Daimajin.hpp"
@@ -24,6 +24,7 @@ public:
     void AddDaimajin(int place);
     void AddBloodhand(int place);
     void AddHoi(int place);
+    void AddKillerMachine(int place);
     void AddDecoyKinoko(int place);
     void PrintInfo();
     void AddTestCondition();
