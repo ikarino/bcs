@@ -69,7 +69,7 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
                 }
             }
         }
-        // atack summon
+        // attack summon
         return;
     } else {
         // Summon が遠くにいる。

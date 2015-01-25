@@ -1,9 +1,10 @@
 #include "Map.hpp"
-#include "GUIField.hpp"
-#include "Daimajin.hpp"
 #include <unistd.h>
 
 Map::Map() {
+    //
+    // ここの初期化はほとんどインプットファイルによるものに書き換える。
+    //
     for(int i = 0; i < 400; i++) {
         if (i%20 == 0 || i%20 == 19 || i/20 == 0 || i/20 == 19) {
             info[i] = 1;
@@ -13,6 +14,10 @@ Map::Map() {
     }
     gui = new GUIField();
     SetGUI();
+
+    // Setting the daimajin upper limit
+    upper_limit = 20;
+    Bloodhand::SetUpperLimit(upper_limit);
 
     // Test
     info[42] = 1;
