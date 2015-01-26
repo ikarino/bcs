@@ -5,16 +5,16 @@
 #include "Bloodhand.hpp"
 #include "Daimajin.hpp"
 #include "Map.hpp"
+#include "Input.hpp"
 
 #include <ctime>
 
 int main() {
+    // std::string filename = "input.bcs";
+    // Input inp(filename);
     srand((unsigned)time(NULL));
     Map *map = new Map();
-    for (int i = 0; i < 1500; i++) {
-        map->Run();
-    }
-    map->ShowFinishStatus();
+    map->Run();
     // gui->random();
 #ifdef GUI
     return Fl::run();

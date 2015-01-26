@@ -22,13 +22,19 @@ Bloodhand::Bloodhand(int place, bool double_speed) {
 void Bloodhand::Action(int &info,
                        std::vector<Summon> *sm,
                        std::vector<Daimajin> *dm) {
+#ifdef DEBUG
     printf("##########\n");
+#endif
     if (rand()%4 == 0) {
         // だいまじん召喚
+#ifdef DEBUG
         printf("Arragin !\n");
+#endif
         _arragin_count++;
         if (dm->size() == Bloodhand::__upper_limit) {
+#ifdef DEBUG
             printf("Reached upper limit of daimajins\n");
+#endif
             _upper_limit_vain_count++;
             return;
         }
@@ -41,7 +47,9 @@ void Bloodhand::Action(int &info,
         }
         // 召喚スペースが無い場合
         if (blank_positions.size() == 0) {
+#ifdef DEBUG
             printf("No place to Arragin ! Shit !\n");
+#endif
             _no_place_vain_count++;
             return;
         }
@@ -62,18 +70,21 @@ void Bloodhand::Action(int &info,
         // 囮が隣接していない場合return
         // 実際には囮がいないことはありえない。
         if (targets.size() == 0) {
+#ifdef DEBUG
             printf("No Decoy found.\n");
             printf("Is this Debug mode ?");
+#endif
             return;
         }
 
         // 攻撃対象の囮を決定
         int target_place = targets[rand() % targets.size()];
+#ifdef DEBUG
         printf("Going to Attack Decoy at %d\n", target_place);
-
+#endif
         for (auto it = sm->begin(); it != sm->end(); ++it) {
             if (it->GetPlace() == target_place) {
-                printf("Decoy was Attacked!\n");
+                // printf("Decoy was Attacked!\n");
                 it->GetDamage(_realATK);
                 if (it->GetIncidentHP() <= 0) {
                     printf("Simulation Failed\n");

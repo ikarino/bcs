@@ -2,6 +2,7 @@
 #include "Summon.hpp"
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 
 Daimajin::Daimajin(int place) {
     // daimajin 105 34 30
@@ -34,7 +35,9 @@ void Daimajin::Get25() {
 
 
 void Daimajin::Action(int &info, std::vector<Summon> *sm) {
+#ifdef DEBUG
     printf("----------\n");
+#endif
     int dx = GetPlace()/20;  // 大魔神のx座標
     int dy = GetPlace()%20;  // 大魔神のy座標
     int minimum_distance = 400;  // 大魔神と最も近いSummonとの距離
@@ -61,18 +64,22 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
     } else if (minimum_distance == 400) {
         // Summon がいない。
         // シミュレーション上、起こっては困る。
+#ifdef DEBUG
         printf("No Summon Found\n");
+#endif
         return;
     } else if (minimum_distance == 1 || minimum_distance == 2) {
         // Summon に隣接している
+#ifdef DEBUG
         printf("Next to Summon\n");
+#endif
         int target = rand() % target_x.size();
         int target_place = target_x[target] * 20 + target_y[target];
         for (auto it = sm->begin(); it != sm->end(); ++it) {
             if (it->GetPlace() == target_place) {
-                printf("Summon was Attacked !\n");
+                // printf("Summon was Attacked !\n");
                 it->GetDamage(_realATK);
-                printf("Now HP: %d\n", it->GetIncidentHP());
+                // printf("Now HP: %d\n", it->GetIncidentHP());
                 if (it->GetIncidentHP() <= 0) {
                     printf("Simulation Failed\n");
                     exit(0);
@@ -84,8 +91,10 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
     } else {
         // Summon が遠くにいる。
         int target = rand() % target_x.size();
+#ifdef DEBUG
         printf("%ld Summons Found\n", target_x.size());
         printf("Moving toward the Summon at x = %d, y = %d\n", target_x[target], target_y[target]);
+#endif
         (&info)[_place] = 0;
         _place += calc_minimum(dx, dy, target_x[target], target_y[target], info);
         (&info)[_place] = 2;
@@ -93,9 +102,35 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
     }
 }
 
+
+void Daimajin::Tukon(double at) {
+    if (at == 0) {
+#ifdef DEBUG
+        printf("AT is 0. Just seeing how it goes.\n");
+#endif
+        return;
+    }
+    if (rand()%100 < 92) {
+        int dm = static_cast<int>(floor(at*pow(0.97222222, _realDEF)
+                                        *(112+rand()%32)/128 + 0.5));
+        if (dm != 0) {
+            _hp -= dm;
+        } else {
+            _hp -= 1;
+        }
+#ifdef DEBUG
+        printf("Damage : %d\n", dm);
+    } else {
+        printf("Missed\n");
+#endif
+    }
+}
+
+
 int calc_len(int x, int y, int X, int Y) {
     return (x-X)*(x-X) + (y-Y)*(y-Y);
 }
+
 
 int calc_minimum(int x, int y, int X, int Y, int& info) {
     int ret = 0;

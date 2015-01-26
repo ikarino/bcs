@@ -14,6 +14,7 @@ public:
     int GetMHP() { return _maximumHP; }
     int GetIncidentEXP() { return _exp; }
     unsigned int GetKillCount() { return _kill_count; }
+    unsigned int GetActiveTurn() { return _active_turn; }
     int GetMonsterINDEX() { return _monsterINDEX; }
 
     void ShowStatus();
@@ -38,6 +39,7 @@ private:
     bool _invisible;
 
     unsigned int _kill_count;
+    unsigned int _active_turn;
 };
 
 #endif

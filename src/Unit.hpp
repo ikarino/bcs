@@ -5,6 +5,7 @@ class Unit {
 public:
     int GetPlace() { return _place; }
     bool isSealed() { return _seal; };
+    bool isDoubleSpeed() { return _double_speed; }
     int GetIncidentHP() { return _hp; }
     void Seal() { _seal = true; }
     void GetDamage(double at);

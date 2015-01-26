@@ -10,6 +10,7 @@ public:
     Daimajin(int, int);
     void Action(int &info, std::vector<Summon> *sm);
     void Get25();
+    void Tukon(double at);
 };
 int calc_len(int, int, int, int);
 int calc_minimum(int, int, int, int, int &);

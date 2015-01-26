@@ -24,6 +24,7 @@ Summon::Summon(int place, int monsterINDEX, int lv, int dope, bool doublespeed,
     _rec = GetREC(_monsterINDEX);
 
     _kill_count = 0;
+    _active_turn = 0;
 }
 
 
@@ -43,8 +44,10 @@ void Summon::ShowStatus() {
 void Summon::Action(int &info,
                     std::vector<Daimajin> *dm,
                     std::vector<Summon> *sm) {
+#ifdef DEBUG
     printf("************\n");
     ShowStatus();
+#endif
     // 自然回復
     _hp += _maximumHP/_rec;
     if (_hp > _maximumHP) {
@@ -66,21 +69,26 @@ void Summon::Action(int &info,
     int list[] = {-21, -20, -19, -1, 1, 19, 20, 21};
     std::vector<int> targets;
     for (int i = 0; i < 8; ++i) {
-        if ((&info)[_place + list[i]] == 2) {
+        if ((&info)[_place + list[i]] == 2 ||
+            (&info)[_place + list[i]] == 3){
             targets.push_back(_place+list[i]);
         }
     }
 
     // 隣接していない場合return
     if (targets.size() == 0) {
+#ifdef DEBUG
         printf("No Daimajin found.\n");
+#endif
         return;
     }
+    _active_turn++;
 
     // 攻撃対象を決定
     int target_place = targets[rand() % targets.size()];
+#ifdef DEBUG
     printf("Going to Attack Daimajin at %d\n", target_place);
-
+#endif
 
     if (isSealed()) {
         StandardAttack(target_place, info, dm);
@@ -106,8 +114,16 @@ void Summon::StandardAttack(int target_place,
     for (auto it = dm->begin(); it != dm->end(); ++it) {
         if (it->GetPlace() == target_place) {
             // printf("Before attack HP was: %d\n", it->GetIncidentHP());
-            printf("Daimajin was Attacked!\n");
-            it->GetDamage(_realATK);
+            // printf("Daimajin was Attacked!\n");
+            if (_monsterINDEX == 201 || _monsterINDEX == 203) {
+                if (rand()%5 < 2) {
+                    it->Tukon(_realATK);
+                } else {
+                    it->GetDamage(_realATK);
+                }
+            } else {
+                it->GetDamage(_realATK);
+            }
             // printf("After attack HP was: %d\n", it->GetIncidentHP());
             if (it->GetIncidentHP() <= 0) {
                 dm->erase(it);
@@ -126,7 +142,7 @@ void Summon::KillerMachine(int target_place,
                            std::vector<Daimajin> *dm) {
     for (auto it = dm->begin(); it != dm->end(); ++it) {
         if (it->GetPlace() == target_place) {
-            printf("Daimajin was Attacked!\n");
+            // printf("Daimajin was Attacked!\n");
             for (int i = 0; i < 2; i++) {
                 it->GetDamage(_realATK);
                 if (it->GetIncidentHP() <= 0) {
@@ -141,6 +157,7 @@ void Summon::KillerMachine(int target_place,
         }
     }
 };
+
 
 void Summon::Get25() {
     _hp += 25;
@@ -194,7 +211,10 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
     // Action
     if (dohoimi) {
         // ホイミする場合
+#ifdef DEBUG
         printf("Hoimi !!!!!!!!!\n");
+#endif
+        _active_turn++;
         for (auto it = damaged_d.begin(); it != damaged_d.end(); it++) {
             it->Get25();
         }
@@ -203,7 +223,10 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
         }
     } else {
         // 通常攻撃する場合
+#ifdef DEBUG
         printf("Attack !!!!!!!!!\n");
+#endif
+        _active_turn++;
         // ふらふら攻撃確率 30% TODO
         if (rand()%10 < 7) {
             return;
@@ -213,21 +236,25 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
         int list[] = {-21, -20, -19, -1, 1, 19, 20, 21};
         std::vector<int> targets;
         for (int i = 0; i < 8; ++i) {
-            if ((&info)[_place + list[i]] == 2) {
+            if ((&info)[_place + list[i]] == 2 ||
+                (&info)[_place + list[i]] == 3) {
                 targets.push_back(_place+list[i]);
             }
         }
 
         // 隣接していない場合return
         if (targets.size() == 0) {
+#ifdef DEBUG
             printf("No Daimajin found.\n");
+#endif
             return;
         }
 
         // 攻撃対象を決定
         int target_place = targets[rand() % targets.size()];
+#ifdef DEBUG
         printf("Going to Attack Daimajin at %d\n", target_place);
-
+#endif
         // 通常攻撃
         StandardAttack(target_place, info, dm);
     }
@@ -235,12 +262,16 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
 }
 
 void Summon::KilledSasaki() {
+#ifdef DEBUG
     printf("Yeah ! I killed Sasaki !\n");
+#endif
     if ( _lv == 99) { return; }
 
     _exp += 560;
     if (_exp > GetEXP(_monsterINDEX, _lv+1)) {
+#ifdef DEBUG
         printf("LEVEL UP !!\n");
+#endif
         _lv += 1;
         SetAbilityScore();
     }
