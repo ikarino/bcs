@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <string>
 
+// #define DEBUG
+
 Summon::Summon(int place, int monsterINDEX, int lv, int dope, bool doublespeed,
                int wATK, int wDEF, bool seal, bool invisible) {
     _place = place;
@@ -49,7 +51,7 @@ void Summon::Action(int &info,
     ShowStatus();
 #endif
     // 自然回復
-    _hp += _maximumHP/_rec;
+    _hp += (double)_maximumHP/_rec;
     if (_hp > _maximumHP) {
         _hp = _maximumHP;
     }
@@ -61,6 +63,7 @@ void Summon::Action(int &info,
     // ラブレスのみだから不要だと思う。
     //
     if (GetMonsterINDEX() == 120 && !isSealed()) {
+        // printf("Hoimin works\n");
         Hoimin(info, dm, sm);
         return;
     }
@@ -172,8 +175,8 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
     int list[] = {-21, -20, -19, -1, 1, 19, 20, 21};
     int pos = GetPlace();
     int damaged_neighbor = 0;
-    std::vector<Daimajin> damaged_d;
-    std::vector<Summon> damaged_s;
+    std::vector<Daimajin*> damaged_d;
+    std::vector<Summon*> damaged_s;
     for (auto it = dm->begin(); it != dm->end(); ++it) {
         if (it->GetIncidentHP() == 135) {
             continue;
@@ -182,7 +185,7 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
         for (int i = 0; i < 8; i++) {
             if (d_pos == pos + list[i]) {
                 damaged_neighbor++;
-                damaged_d.push_back(*it);
+                damaged_d.push_back(&(*it));
             }
         }
     }
@@ -194,7 +197,7 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
         for (int i = 0; i < 8; i++) {
             if (s_pos == pos + list[i]) {
                 damaged_neighbor++;
-                damaged_s.push_back(*it);
+                damaged_s.push_back(&(*it));
             }
         }
     }
@@ -216,15 +219,18 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
 #endif
         _active_turn++;
         for (auto it = damaged_d.begin(); it != damaged_d.end(); it++) {
-            it->Get25();
+            (*it)->Get25();
         }
         for (auto it = damaged_s.begin(); it != damaged_s.end(); it++) {
-            it->Get25();
+            (*it)->Get25();
+#ifdef DEBUG
+            printf("pos x: %d y: %d\n", (*it)->GetPlace()/20, (*it)->GetPlace()%20);
+#endif
         }
     } else {
         // 通常攻撃する場合
 #ifdef DEBUG
-        printf("Attack !!!!!!!!!\n");
+        printf("Attack ?\n");
 #endif
         _active_turn++;
         // ふらふら攻撃確率 30% TODO
@@ -249,6 +255,10 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
 #endif
             return;
         }
+
+#ifdef DEBUG
+        printf("Attack !!!!!!!!!!\n");
+#endif
 
         // 攻撃対象を決定
         int target_place = targets[rand() % targets.size()];

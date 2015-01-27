@@ -4,9 +4,6 @@
 // Toggle line below for GUI
 // #define GUI
 
-// Toggle line below for DEBUG
-// #define DEBUG
-
 #include "Input.hpp"
 #include "Summon.hpp"
 #include "Daimajin.hpp"
@@ -38,12 +35,13 @@ public:
     void ShowFinishStatus(std::vector<int>* data);
     void GetFinishStatus(std::vector<int>* data);
     // Input setting
+    void InitWithInputFile();
 private:
     Input *inp;
     std::vector<Summon> summons;
     std::vector<Daimajin> daimajins;
     std::vector<Bloodhand> bloodhands;
-    int upper_limit;
+    int _upper_limit;
     int _T;
     int _N;
     int info[400];

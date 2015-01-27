@@ -1,8 +1,11 @@
 #include "Daimajin.hpp"
 #include "Summon.hpp"
+#include "status.hpp"
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
+
+// #define DEBUG
 
 Daimajin::Daimajin(int place) {
     // daimajin 105 34 30
@@ -75,16 +78,21 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
 #endif
         int target = rand() % target_x.size();
         int target_place = target_x[target] * 20 + target_y[target];
+        int smindex = 0;
         for (auto it = sm->begin(); it != sm->end(); ++it) {
             if (it->GetPlace() == target_place) {
                 // printf("Summon was Attacked !\n");
                 it->GetDamage(_realATK);
                 // printf("Now HP: %d\n", it->GetIncidentHP());
                 if (it->GetIncidentHP() <= 0) {
-                    printf("Simulation Failed\n");
+                    printf("Simulation Failed\nMonster Below Died.\n");
+                    printf("No. %d\n", smindex);
+                    printf("MONSTER: %s\n", GetName(it->GetMonsterINDEX()).c_str());
+                    printf("Place x: %d y: %d\n", it->GetPlace()/20, it->GetPlace()%20);
                     exit(0);
                 }
             }
+            smindex++;
         }
         // attack summon
         return;

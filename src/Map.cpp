@@ -2,6 +2,7 @@
 #include "status.hpp"
 #include <unistd.h>
 #include <vector>
+#include <cstdlib>
 
 Map::Map() {
     // printf("Initializing data\n");
@@ -10,35 +11,14 @@ Map::Map() {
     //
     std::string filename("input.bcs");
     inp = new Input(filename);
-
-
-    // info初期化
-    for(int i = 0; i < 400; i++) {
-        if (i%20 == 0 || i%20 == 19 || i/20 == 0 || i/20 == 19) {
-            info[i] = 1;
-        } else {
-            info[i] = 0;
-        }
-    }
-    // パラメータ初期化
-    _T = 1500;
-    _N = 1;
+    _N = inp->GetN();
+    _T = inp->GetT();
+    _upper_limit = inp->GetUpperLimit();
+    Bloodhand::SetUpperLimit(_upper_limit);
 
 #ifdef GUI
     gui = new GUIField();
-    SetGUI();
 #endif
-
-    // Setting the daimajin upper limit
-    upper_limit = 20;
-    Bloodhand::SetUpperLimit(upper_limit);
-
-    // Test
-    AddTestCondition();
-#ifdef GUI
-    SetGUI();
-#endif
-    // printf("Finished initialization\n");
 }
 
 
@@ -47,13 +27,19 @@ void Map::ShowFinishStatus(std::vector<int>* data) {
     printf("============RESULT============\n");
     printf("Summons\n");
     double sum = 0;
+    int i = 0;
     for (auto it = summons.begin(); it != summons.end(); ++it) {
         printf("-----------------------------\n");
+        printf("No. %d\n", i++);
         printf("MONSTER: %s\n", GetName(it->GetMonsterINDEX()).c_str());
         printf("Pos X: %d, Y: %d\n", it->GetPlace()/20, it->GetPlace()%20);
         sum += (double)data->at(data_index)/_N;
         printf("EXP         : %.2f\n", (double)data->at(data_index++)/_N * 560);
-        printf("Active turn : %.2f\n", (double)data->at(data_index++)/_N);
+        if (it->isDoubleSpeed()) {
+            printf("Active turn : %.2f\n", (double)data->at(data_index++)/_N/2);
+        } else {
+            printf("Active turn : %.2f\n", (double)data->at(data_index++)/_N);
+        }
     }
     printf("==============================\n");
     printf("Total EXP: %3f\n", sum * 560);
@@ -68,6 +54,74 @@ void Map::ShowFinishStatus(std::vector<int>* data) {
     }
 
 }
+
+
+void Map::InitWithInputFile() {
+    // init
+    summons.clear();
+    daimajins.clear();
+    bloodhands.clear();
+
+    // reading from input file
+    std::vector<int>* data = inp->GetSummonData();
+    std::string mp = inp->GetMapString();
+
+    // invisible data
+    bool invisible[] = {false, false, false, false, false, false, false, false, false, false};
+    for (int i = 0; i < 10; i++) {
+        if (data->at(i*8+7) == 1) {
+            invisible[i] = true;
+        }
+    }
+    // Info
+    int summon_place[] = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+    std::vector<int> bloodhand_place;
+    for (int i = 0; i < 400; i++) {
+        switch(mp[i]) {
+        case '-':
+            info[i] = 0;
+            break;
+        case '+':
+            info[i] = 1;
+            break;
+        case '*':
+            info[i] = 3;
+            bloodhand_place.push_back(i);
+            break;
+        default:
+            int id = mp[i]-48;
+            summon_place[id] = i;
+            if (invisible[id]) {
+                info[i] = 5;
+            } else {
+                info[i] = 4;
+            }
+            break;
+        }
+    }
+
+    // Summon data
+    for (int i = 0; i < 10; i++) {
+        Summon s(summon_place[i], data->at(i*8+0), data->at(i*8+1),
+                 data->at(i*8+2), data->at(i*8+3), data->at(i*8+4),
+                 data->at(i*8+5), data->at(i*8+6), data->at(i*8+7));
+        summons.push_back(s);
+    }
+
+    // Blood hand data
+    if (inp->isDoubleSpeed()) {
+        for (int i = 0; i < bloodhand_place.size(); i++) {
+            Bloodhand b(bloodhand_place[i], true);
+            bloodhands.push_back(b);
+        }
+    } else {
+        for (int i = 0; i < bloodhand_place.size(); i++) {
+            Bloodhand b(bloodhand_place[i], false);
+            bloodhands.push_back(b);
+        }
+    }
+    // printf("Initialization finished.\n");
+ };
 
 
 void Map::GetFinishStatus(std::vector<int>* data) {
@@ -103,7 +157,6 @@ void Map::AddTestCondition() {
 
 void Map::Run1turn() {
     // printf("Number of Daimajins are %ld\n", daimajins.size());
-
     // ブラッドハンドの行動
     for (auto it = bloodhands.begin(); it != bloodhands.end(); ++it){
         it->Action(info[0], &summons, &daimajins);
@@ -143,6 +196,7 @@ void Map::Run1turn() {
         SetGUI();
 #endif
     }
+    // printf("HP= %d\n", summons.back().GetIncidentHP());
     // PrintInfo();
 }
 
@@ -156,6 +210,7 @@ void Map::Run() {
     // * arrajin
     // * no place
     // * upper limit
+    InitWithInputFile();
     std::vector<int> data;
     int data_number = summons.size()*2 + bloodhands.size()*3;
     for (int i = 0; i < data_number; i++) {
@@ -163,13 +218,14 @@ void Map::Run() {
     }
 
     for (int n = 0; n < _N; n++) {
-        // Some function to initialize
+        InitWithInputFile();
+        printf("\tn=%d\n", n);
         for (int t = 0; t < _T; t++) {
             Run1turn();
         }
-        for (auto it = bloodhands.begin(); it != bloodhands.end(); it++) {
-            // printf("HP: %d\n", it->GetIncidentHP());
-        }
+        // for (auto it = bloodhands.begin(); it != bloodhands.end(); it++) {
+        //     printf("HP: %d\n", it->GetIncidentHP());
+        // }
         GetFinishStatus(&data);
     }
     ShowFinishStatus(&data);
@@ -177,7 +233,7 @@ void Map::Run() {
 void Map::SetGUI() {
     gui->setColor(info);
     // usleep(100000);
-    usleep(10000);
+    usleep(1000);
 }
 
 void Map::AddDaimajin(int place) {
@@ -239,7 +295,12 @@ void Map::ChangeGUI(int field_index, int color_index) {
     gui->changeColor(field_index, color_index);
 }
 
-Map::~Map() {};
+Map::~Map() {
+    delete inp;
+#ifdef GUI
+    delete gui;
+#endif
+};
 
 
 void Map::PrintInfo() {

@@ -1,8 +1,10 @@
 #include "Bloodhand.hpp"
 #include "Daimajin.hpp"
 #include "Summon.hpp"
+#include "status.hpp"
 #include <cstdlib>
 
+// #define DEBUG
 unsigned long Bloodhand::__upper_limit  = 0;
 
 Bloodhand::Bloodhand(int place, bool double_speed) {
@@ -82,16 +84,21 @@ void Bloodhand::Action(int &info,
 #ifdef DEBUG
         printf("Going to Attack Decoy at %d\n", target_place);
 #endif
+        int smindex = 0;
         for (auto it = sm->begin(); it != sm->end(); ++it) {
             if (it->GetPlace() == target_place) {
                 // printf("Decoy was Attacked!\n");
                 it->GetDamage(_realATK);
                 if (it->GetIncidentHP() <= 0) {
                     printf("Simulation Failed\n");
+                    printf("No. %d\n", smindex);
+                    printf("MONSTER: %s\n", GetName(it->GetMonsterINDEX()).c_str());
+                    printf("Place x: %d y: %d\n", it->GetPlace()/20, it->GetPlace()%20);
                     exit(0);
                 }
+                break;
             }
-            break;
+            smindex++;
         }
     }
 }
