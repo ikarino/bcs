@@ -4,12 +4,13 @@
 #include <vector>
 #include <cstdlib>
 
-Map::Map() {
+// #define GUI
+
+Map::Map(std::string filename) {
     // printf("Initializing data\n");
     //
     // ここの初期化はほとんどインプットファイルによるものに書き換える。
     //
-    std::string filename("input.bcs");
     inp = new Input(filename);
     _N = inp->GetN();
     _T = inp->GetT();
@@ -18,6 +19,7 @@ Map::Map() {
 
 #ifdef GUI
     gui = new GUIField();
+    _N = 1;
 #endif
 }
 
@@ -233,7 +235,7 @@ void Map::Run() {
 void Map::SetGUI() {
     gui->setColor(info);
     // usleep(100000);
-    usleep(1000);
+    usleep(100);
 }
 
 void Map::AddDaimajin(int place) {

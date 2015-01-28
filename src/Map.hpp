@@ -15,7 +15,7 @@ class GUIField;
 
 class Map {
 public:
-    Map();
+    Map(std::string);
     ~Map();
     void SetGUI();
     void ChangeGUI(int field_index, int color_index);

@@ -46,6 +46,7 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
     int minimum_distance = 400;  // 大魔神と最も近いSummonとの距離
     std::vector<int> target_x;  // 最も近いSummonのx座標
     std::vector<int> target_y;  // 最も近いSummonのy座標
+    std::vector<int> target_pos; // 攻撃対象vector。攻撃する前提で準備しておく。
 
     for(int x = 0; x < 20; x++) {
         for(int y = 0; y < 20; y++) {
@@ -59,7 +60,10 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
                 target_y.push_back(y);
             } else if (minimum_distance == len) {
                 target_x.push_back(x);
-                target_x.push_back(y);
+                target_y.push_back(y);
+            }
+            if (len == 1 || len == 2) {
+                target_pos.push_back(x*20+y);
             }
         }
     }
@@ -76,8 +80,8 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
 #ifdef DEBUG
         printf("Next to Summon\n");
 #endif
-        int target = rand() % target_x.size();
-        int target_place = target_x[target] * 20 + target_y[target];
+        int target = rand() % target_pos.size();
+        int target_place = target_pos[target];
         int smindex = 0;
         for (auto it = sm->begin(); it != sm->end(); ++it) {
             if (it->GetPlace() == target_place) {
@@ -91,6 +95,7 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
                     printf("Place x: %d y: %d\n", it->GetPlace()/20, it->GetPlace()%20);
                     exit(0);
                 }
+                break;
             }
             smindex++;
         }

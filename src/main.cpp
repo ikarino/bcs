@@ -9,11 +9,11 @@
 
 #include <ctime>
 
-int main() {
+int main(int argc, char** argv) {
     // std::string filename = "input.bcs";
-    // Input inp(filename);
+    std::string filename(argv[1]);
     srand((unsigned)time(NULL));
-    Map *map = new Map();
+    Map *map = new Map(filename);
     map->Run();
     // gui->random();
 #ifdef GUI
