@@ -109,7 +109,10 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
         printf("Moving toward the Summon at x = %d, y = %d\n", target_x[target], target_y[target]);
 #endif
         (&info)[_place] = 0;
+        // original
         _place += calc_minimum(dx, dy, target_x[target], target_y[target], info);
+        // test 対象は同じで等距離の位置がある場合、ランダムで動く
+        // _place = calc_minimum(_place, target_x[target]*20 + target_y[target], info);
         (&info)[_place] = 2;
         return;
     }
@@ -181,4 +184,31 @@ int calc_minimum(int x, int y, int X, int Y, int& info) {
         len = calc_len(x+1, y+1, X, Y);
     }
     return ret;
+}
+
+
+int calc_len(int pos1, int pos2) {
+    int x_1 = pos1/20;
+    int y_1 = pos1%20;
+    int x_2 = pos2/20;
+    int y_2 = pos2%20;
+    return (x_1-x_2)*(x_1-x_2) + (y_1-y_2)*(y_1-y_2);
+}
+
+
+int calc_minimum(int pos1, int pos2, int& info) {
+    int neighbor[] = {-21, -20, -19, -1, 0, +1, +19, +20, +21};
+    std::vector<int> min;
+    int minimum = 10000000;
+    for (int i = 0; i < 9; i++) {
+        if (calc_len(pos1 + neighbor[i], pos2) < minimum
+            && (&info)[pos1 + neighbor[i] == 0]) {
+            min.clear();
+            min.push_back(pos1*neighbor[i]);
+        } else if (calc_len(pos1 + neighbor[i], pos2) == minimum
+                   && (&info)[pos1 + neighbor[i] == 0]) {
+            min.push_back(pos1*neighbor[i]);
+        }
+    }
+    return min[rand()%min.size()];
 }
