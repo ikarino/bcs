@@ -85,7 +85,7 @@ void Bloodhand::Action(int &info,
         printf("Going to Attack Decoy at %d\n", target_place);
 #endif
         int smindex = 0;
-        for (auto it = sm->begin(); it != sm->end(); ++it) {
+        for (itS it = sm->begin(); it != sm->end(); ++it) {
             if (it->GetPlace() == target_place) {
                 // printf("Decoy was Attacked!\n");
                 it->GetDamage(_realATK);

@@ -2,7 +2,7 @@
 #define __MAP_H__
 
 // Toggle line below for GUI
-#define GUI
+// #define GUI
 
 #include "Input.hpp"
 #include "Summon.hpp"

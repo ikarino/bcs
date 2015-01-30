@@ -21,4 +21,5 @@ private:
     int _arragin_count;
 };
 
+typedef std::vector<Bloodhand>::iterator itB;
 #endif

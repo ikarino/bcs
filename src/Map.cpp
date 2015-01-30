@@ -28,7 +28,7 @@ void Map::ShowFinishStatus(std::vector<int>* data) {
     printf("Summons\n");
     double sum = 0;
     int i = 0;
-    for (auto it = summons.begin(); it != summons.end(); ++it) {
+    for (itS it = summons.begin(); it != summons.end(); ++it) {
         printf("-----------------------------\n");
         printf("No. %d\n", i++);
         printf("MONSTER: %s\n", GetName(it->GetMonsterINDEX()).c_str());
@@ -45,7 +45,7 @@ void Map::ShowFinishStatus(std::vector<int>* data) {
     printf("Total EXP: %3f\n", sum * 560);
     printf("==============================\n");
     printf("Bloodhands\n");
-    for (auto it = bloodhands.begin(); it != bloodhands.end(); it++) {
+    for (itB it = bloodhands.begin(); it != bloodhands.end(); it++) {
         printf("-----------------------------\n");
         printf("Pos X: %d, Y: %d\n", it->GetPlace()/20, it->GetPlace()%20);
         printf(" # of daimajin    : %.2f\n", (double)data->at(data_index++)/_N);
@@ -126,11 +126,11 @@ void Map::InitWithInputFile() {
 
 void Map::GetFinishStatus(std::vector<int>* data) {
     int data_index = 0;
-    for (auto it = summons.begin(); it != summons.end(); ++it) {
+    for (itS it = summons.begin(); it != summons.end(); ++it) {
         data->at(data_index++) += it->GetKillCount();
         data->at(data_index++) += it->GetActiveTurn();
     }
-    for (auto it = bloodhands.begin(); it != bloodhands.end(); it++) {
+    for (itB it = bloodhands.begin(); it != bloodhands.end(); it++) {
         data->at(data_index++) += it->GetArrajin();
         data->at(data_index++) += it->GetNoPlaceVainCount();
         data->at(data_index++) += it->GetUpperLimitVainCount();
@@ -158,28 +158,28 @@ void Map::AddTestCondition() {
 void Map::Run1turn() {
     // printf("Number of Daimajins are %ld\n", daimajins.size());
     // ブラッドハンドの行動
-    for (auto it = bloodhands.begin(); it != bloodhands.end(); ++it){
+    for (itB it = bloodhands.begin(); it != bloodhands.end(); ++it){
         it->Action(info[0], &summons, &daimajins);
 #ifdef GUI
         SetGUI();
 #endif
     }
     // だいまじんの行動
-    for (auto it = daimajins.begin(); it != daimajins.end(); ++it){
+    for (itD it = daimajins.begin(); it != daimajins.end(); ++it){
         it->Action(info[0], &summons);
 #ifdef GUI
         SetGUI();
 #endif
     }
     // 仲間の行動
-    for (auto it = summons.begin(); it != summons.end(); ++it){
+    for (itS it = summons.begin(); it != summons.end(); ++it){
         it->Action(info[0], &daimajins, &summons);
 #ifdef GUI
         SetGUI();
 #endif
     }
     // ブラッドハンドの行動2
-    for (auto it = bloodhands.begin(); it != bloodhands.end(); ++it){
+    for (itB it = bloodhands.begin(); it != bloodhands.end(); ++it){
         if (it->isDoubleSpeed()) {
             it->Action(info[0], &summons, &daimajins);
         }
@@ -188,7 +188,7 @@ void Map::Run1turn() {
 #endif
     }
     // 仲間の行動2
-    for (auto it = summons.begin(); it != summons.end(); ++it){
+    for (itS it = summons.begin(); it != summons.end(); ++it){
         if (it->isDoubleSpeed()) {
             it->Action(info[0], &daimajins, &summons);
         }

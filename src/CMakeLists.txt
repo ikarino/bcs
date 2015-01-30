@@ -13,4 +13,4 @@ add_executable (bcs
   Unit.cpp
   Input.cpp)
 target_link_libraries (bcs fltk)
-set(CMAKE_CXX_FLAGS "-std=c++0x -O3 -Wall")
+set(CMAKE_CXX_FLAGS "-O3 -Wall")

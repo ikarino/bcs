@@ -83,7 +83,7 @@ void Daimajin::Action(int &info, std::vector<Summon> *sm) {
         int target = rand() % target_pos.size();
         int target_place = target_pos[target];
         int smindex = 0;
-        for (auto it = sm->begin(); it != sm->end(); ++it) {
+        for (itS it = sm->begin(); it != sm->end(); ++it) {
             if (it->GetPlace() == target_place) {
                 // printf("Summon was Attacked !\n");
                 it->GetDamage(_realATK);

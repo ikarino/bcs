@@ -42,4 +42,6 @@ private:
     unsigned int _active_turn;
 };
 
+typedef std::vector<Summon>::iterator itS;
+typedef std::vector<Summon*>::iterator pitS;
 #endif

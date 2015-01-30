@@ -114,7 +114,7 @@ void Summon::Action(int &info,
 void Summon::StandardAttack(int target_place,
                             int &info,
                             std::vector<Daimajin> *dm) {
-    for (auto it = dm->begin(); it != dm->end(); ++it) {
+    for (itD it = dm->begin(); it != dm->end(); ++it) {
         if (it->GetPlace() == target_place) {
             // printf("Before attack HP was: %d\n", it->GetIncidentHP());
             // printf("Daimajin was Attacked!\n");
@@ -143,7 +143,7 @@ void Summon::StandardAttack(int target_place,
 void Summon::KillerMachine(int target_place,
                            int &info,
                            std::vector<Daimajin> *dm) {
-    for (auto it = dm->begin(); it != dm->end(); ++it) {
+    for (itD it = dm->begin(); it != dm->end(); ++it) {
         if (it->GetPlace() == target_place) {
             // printf("Daimajin was Attacked!\n");
             for (int i = 0; i < 2; i++) {
@@ -177,7 +177,7 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
     int damaged_neighbor = 0;
     std::vector<Daimajin*> damaged_d;
     std::vector<Summon*> damaged_s;
-    for (auto it = dm->begin(); it != dm->end(); ++it) {
+    for (itD it = dm->begin(); it != dm->end(); ++it) {
         if (it->GetIncidentHP() == 135) {
             continue;
         }
@@ -189,7 +189,7 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
             }
         }
     }
-    for (auto it = sm->begin(); it != sm->end(); ++it) {
+    for (itS it = sm->begin(); it != sm->end(); ++it) {
         if (it->GetIncidentHP() == it->GetMHP()) {
             continue;
         }
@@ -218,10 +218,10 @@ void Summon::Hoimin(int &info, std::vector<Daimajin> *dm, std::vector<Summon> *s
         printf("Hoimi !!!!!!!!!\n");
 #endif
         _active_turn++;
-        for (auto it = damaged_d.begin(); it != damaged_d.end(); it++) {
+        for (pitD it = damaged_d.begin(); it != damaged_d.end(); it++) {
             (*it)->Get25();
         }
-        for (auto it = damaged_s.begin(); it != damaged_s.end(); it++) {
+        for (pitS it = damaged_s.begin(); it != damaged_s.end(); it++) {
             (*it)->Get25();
 #ifdef DEBUG
             printf("pos x: %d y: %d\n", (*it)->GetPlace()/20, (*it)->GetPlace()%20);
