@@ -4,8 +4,6 @@
 #include <vector>
 #include <cstdlib>
 
-// #define GUI
-
 Map::Map(std::string filename) {
     // printf("Initializing data\n");
     //
@@ -221,22 +219,30 @@ void Map::Run() {
 
     for (int n = 0; n < _N; n++) {
         InitWithInputFile();
-        printf("\tn=%d\n", n);
+        printf("\tn=%d\n", n+1);
         for (int t = 0; t < _T; t++) {
             Run1turn();
         }
-        // for (auto it = bloodhands.begin(); it != bloodhands.end(); it++) {
-        //     printf("HP: %d\n", it->GetIncidentHP());
-        // }
         GetFinishStatus(&data);
     }
     ShowFinishStatus(&data);
 }
+
+
+#ifdef GUI
 void Map::SetGUI() {
     gui->setColor(info);
     // usleep(100000);
     usleep(100);
 }
+
+
+/*
+  void Map::ChangeGUI(int field_index, int color_index) {
+  gui->changeColor(field_index, color_index);
+  }
+*/
+#endif
 
 void Map::AddDaimajin(int place) {
     Daimajin d(place);
@@ -292,10 +298,6 @@ void Map::AddDecoyKinoko(int place) {
     }
 }
 
-
-void Map::ChangeGUI(int field_index, int color_index) {
-    gui->changeColor(field_index, color_index);
-}
 
 Map::~Map() {
     delete inp;

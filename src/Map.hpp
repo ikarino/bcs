@@ -2,13 +2,17 @@
 #define __MAP_H__
 
 // Toggle line below for GUI
-// #define GUI
+#define GUI
 
 #include "Input.hpp"
 #include "Summon.hpp"
 #include "Daimajin.hpp"
 #include "Bloodhand.hpp"
+
+#ifdef GUI
 #include "GUIField.hpp"
+#endif
+
 #include <vector>
 
 class GUIField;
@@ -17,8 +21,8 @@ class Map {
 public:
     Map(std::string);
     ~Map();
-    void SetGUI();
-    void ChangeGUI(int field_index, int color_index);
+#ifdef GUI
+#endif
     void SetInfo(int place, int index) { info[place] = index; };
     void Run1turn();
     void Run();
@@ -53,7 +57,13 @@ private:
       info == 4 : summon visible
       info == 5 : summon invisible
      */
+#ifdef GUI
+public:
+    void SetGUI();
+    // void ChangeGUI(int field_index, int color_index);
+private:
     GUIField *gui;
+#endif
 };
 
 #endif

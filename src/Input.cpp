@@ -178,15 +178,16 @@ Input::Input(std::string filename) {
     // Monster Data
     std::vector<int> decoys;
     std::vector<int> invisibles;
+    int number_of_datas = 8;
     for (int index = 0; index < 10; index++) {
-        int id = _monster_data[index*8+0];
-        int lv = _monster_data[index*8+1];
-        int dope = _monster_data[index*8+2];
-        int speed = _monster_data[index*8+3];
-        int mizu = _monster_data[index*8+4];
-        int rukani = _monster_data[index*8+5];
-        int seal = _monster_data[index*8+6];
-        int invisible = _monster_data[index*8+7];
+        int id = _monster_data[index*number_of_datas+0];
+        int lv = _monster_data[index*number_of_datas+1];
+        int dope = _monster_data[index*number_of_datas+2];
+        int speed = _monster_data[index*number_of_datas+3];
+        int mizu = _monster_data[index*number_of_datas+4];
+        int rukani = _monster_data[index*number_of_datas+5];
+        int seal = _monster_data[index*number_of_datas+6];
+        int invisible = _monster_data[index*number_of_datas+7];
         try {
             GetName(id);
         } catch(...) {
